@@ -1,6 +1,13 @@
 table ventas_ejemplo
 	lineageTag: 512e2eeb-3d72-414b-8942-7339e5069dab
 
+	measure 'Tot ventas' =
+			sumx(ventas_ejemplo,
+			    ventas_ejemplo[cantidad]*ventas_ejemplo[precio_uni])
+		lineageTag: b60d32a6-422a-458d-aceb-adc6b57ef753
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column cliente
 		dataType: string
 		lineageTag: afe86820-9b86-43b4-8e20-81440ab6c891
