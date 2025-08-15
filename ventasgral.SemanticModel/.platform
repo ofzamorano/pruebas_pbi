@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "ventasgral"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a076910a-1c85-4a16-8d05-f5360ab39e33"
+  }
+}

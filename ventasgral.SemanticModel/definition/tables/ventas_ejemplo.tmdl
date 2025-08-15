@@ -1,0 +1,61 @@
+table ventas_ejemplo
+	lineageTag: 512e2eeb-3d72-414b-8942-7339e5069dab
+
+	column cliente
+		dataType: string
+		lineageTag: afe86820-9b86-43b4-8e20-81440ab6c891
+		summarizeBy: none
+		sourceColumn: cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c3f941bd-c61f-465c-877b-3a762c8693cd
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column producto
+		dataType: string
+		lineageTag: 011c3feb-bab6-4828-8b65-e80284a9fa19
+		summarizeBy: none
+		sourceColumn: producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column cantidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 252f9222-ab05-495b-be97-7a472411d6ae
+		summarizeBy: sum
+		sourceColumn: cantidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column precio_uni
+		dataType: double
+		lineageTag: 23191d13-834e-4b59-92d8-9ccc3754e5ad
+		summarizeBy: sum
+		sourceColumn: precio_uni
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition ventas_ejemplo = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\OscarPBI\ventas_ejemplo.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cliente", type text}, {"fecha", type date}, {"producto", type text}, {"cantidad", Int64.Type}, {"precio_uni", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
